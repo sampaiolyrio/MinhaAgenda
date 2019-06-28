@@ -12,12 +12,13 @@
         <activity
             android:name=".FormularioActivity"
             android:label="Formulário">
+
+        </activity>
+        <activity android:name=".ListaAlunosActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".ListaAlunosActivity">
         </activity>
     </application>
 
