@@ -7,6 +7,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import br.com.lyrio.minhaagenda.dao.PessoaDAO;
 import br.com.lyrio.minhaagenda.modelo.Pessoa;
 
 public class FormularioActivity extends AppCompatActivity {
@@ -37,6 +38,11 @@ public class FormularioActivity extends AppCompatActivity {
             case R.id.menu_formulario_ok:
 
             Pessoa pessoa = helper.pegaPessoa();
+            PessoaDAO dao = new PessoaDAO(this);
+            dao.insere(pessoa);
+            dao.close();
+
+
              Toast.makeText(FormularioActivity.this, "Dados " + pessoa.getNome()+" Salvos!", Toast.LENGTH_SHORT).show();
 
 
