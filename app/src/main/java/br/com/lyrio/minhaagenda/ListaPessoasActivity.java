@@ -20,14 +20,7 @@ public class ListaPessoasActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_pessoas);
 
-        PessoaDAO dao = new PessoaDAO (this);
-        List<Pessoa> pessoas = dao.buscaPessoas();
-        dao.close();
 
-
-        ListView listaPessoas = (ListView) findViewById(R.id.lista_pessoas);
-        ArrayAdapter<Pessoa> adapter = new ArrayAdapter<Pessoa>(this, android.R.layout.simple_list_item_1, pessoas);
-        listaPessoas.setAdapter(adapter);
 
         Button novaPessoa = (Button) findViewById(R.id.nova_pessoa);
         novaPessoa.setOnClickListener(new View.OnClickListener() {
@@ -38,5 +31,22 @@ public class ListaPessoasActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void carregaLista() {
+        PessoaDAO dao = new PessoaDAO (this);
+        List<Pessoa> pessoas = dao.buscaPessoas();
+        dao.close();
+
+
+        ListView listaPessoas = (ListView) findViewById(R.id.lista_pessoas);
+        ArrayAdapter<Pessoa> adapter = new ArrayAdapter<Pessoa>(this, android.R.layout.simple_list_item_1, pessoas);
+        listaPessoas.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        carregaLista();
     }
 }
