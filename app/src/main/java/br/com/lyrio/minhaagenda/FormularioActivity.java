@@ -1,24 +1,24 @@
 package br.com.lyrio.minhaagenda;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
+import br.com.lyrio.minhaagenda.modelo.Pessoa;
+
 public class FormularioActivity extends AppCompatActivity {
+
+    private FormularioHelper helper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formulario);
+
+     helper =  new FormularioHelper(this);
 
 
     }
@@ -35,7 +35,10 @@ public class FormularioActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.menu_formulario_ok:
-            Toast.makeText(FormularioActivity.this, "Dados Salvos!", Toast.LENGTH_SHORT).show();
+
+            Pessoa pessoa = helper.pegaPessoa();
+             Toast.makeText(FormularioActivity.this, "Dados " + pessoa.getNome()+" Salvos!", Toast.LENGTH_SHORT).show();
+
             finish();
             break;
         }
