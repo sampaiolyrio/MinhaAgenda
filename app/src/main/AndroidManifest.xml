@@ -14,7 +14,7 @@
             android:label="Formulário">
 
         </activity>
-        <activity android:name=".ListaAlunosActivity">
+        <activity android:name=".ListaPessoasActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
