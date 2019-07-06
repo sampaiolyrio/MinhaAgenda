@@ -60,6 +60,6 @@ public class Pessoa implements Serializable {
 
     @Override
     public String toString() {
-        return getId() + " - " + getNome();
+        return getNome();
     }
 }

@@ -57,7 +57,7 @@ public class PessoaDAO extends SQLiteOpenHelper {
     }
 
     public List<Pessoa> buscaPessoas() {
-        String sql = "SELECT * FROM pessoas";
+        String sql = "SELECT * FROM pessoas p order by p.nome";
         SQLiteDatabase db = getReadableDatabase();
         Cursor c = db.rawQuery(sql, null);
         List<Pessoa> pessoas = new ArrayList<Pessoa>();
