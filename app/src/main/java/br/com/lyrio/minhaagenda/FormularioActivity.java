@@ -52,7 +52,18 @@ public class FormularioActivity extends AppCompatActivity {
 
             Pessoa pessoa = helper.pegaPessoa();
             PessoaDAO dao = new PessoaDAO(this);
-            dao.insere(pessoa);
+
+            if (pessoa.getId() != null){
+
+                dao.altera(pessoa);
+
+            } else{
+
+                dao.insere(pessoa);
+            }
+
+
+
             dao.close();
 
 

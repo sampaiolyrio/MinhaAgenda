@@ -39,16 +39,21 @@ public class PessoaDAO extends SQLiteOpenHelper {
     public void insere(Pessoa pessoa) {
         SQLiteDatabase db = getWritableDatabase();
 
+        ContentValues dados = pegaDadosDaPessoa(pessoa);
+
+
+        db.insert("pessoas", null, dados);
+
+    }
+
+    private ContentValues pegaDadosDaPessoa(Pessoa pessoa) {
         ContentValues dados = new ContentValues();
         dados.put ("nome", pessoa.getNome());
         dados.put("endereco", pessoa.getEndereco());
         dados.put("telefone", pessoa.getTelefone());
         dados.put("site", pessoa.getSite());
         dados.put("nota", pessoa.getNota());
-
-
-        db.insert("pessoas", null, dados);
-
+        return dados;
     }
 
     public List<Pessoa> buscaPessoas() {
@@ -77,5 +82,14 @@ public class PessoaDAO extends SQLiteOpenHelper {
     SQLiteDatabase db = getWritableDatabase();
     String[] params = {pessoa.getId().toString()};
     db.delete("Pessoas", "id = ?", params );
+    }
+
+    public void altera(Pessoa pessoa) {
+        SQLiteDatabase db =getWritableDatabase();
+
+        ContentValues dados = pegaDadosDaPessoa(pessoa);
+        String[] params = {pessoa.getId().toString()};
+        db.update("Pessoas", dados,"id = ?", params);
+
     }
 }
