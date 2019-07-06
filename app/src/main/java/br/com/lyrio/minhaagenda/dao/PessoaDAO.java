@@ -72,4 +72,10 @@ public class PessoaDAO extends SQLiteOpenHelper {
 
         return pessoas;
     }
+
+    public void deleta(Pessoa pessoa) {
+    SQLiteDatabase db = getWritableDatabase();
+    String[] params = {pessoa.getId().toString()};
+    db.delete("Pessoas", "id = ?", params );
+    }
 }
