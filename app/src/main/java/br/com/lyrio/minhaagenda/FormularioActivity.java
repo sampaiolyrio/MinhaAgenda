@@ -1,11 +1,14 @@
 package br.com.lyrio.minhaagenda;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import java.io.Serializable;
 
 import br.com.lyrio.minhaagenda.dao.PessoaDAO;
 import br.com.lyrio.minhaagenda.modelo.Pessoa;
@@ -19,7 +22,17 @@ public class FormularioActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formulario);
 
-     helper =  new FormularioHelper(this);
+        helper =  new FormularioHelper(this);
+
+        Intent intent = getIntent();
+        Pessoa pessoa = (Pessoa) intent.getSerializableExtra("pessoa");
+        if (pessoa != null){
+
+            helper.preencheFormulario(pessoa);
+
+        }
+
+
 
 
     }

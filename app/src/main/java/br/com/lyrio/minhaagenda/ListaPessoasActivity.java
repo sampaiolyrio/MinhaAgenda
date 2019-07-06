@@ -32,12 +32,15 @@ public class ListaPessoasActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> lista, View item, int position, long id) {
                 Pessoa pessoa = (Pessoa) listaPessoas.getItemAtPosition(position);
-                Toast.makeText(ListaPessoasActivity.this, "Pessoa " + pessoa.getNome()+ " Clicada", Toast.LENGTH_SHORT).show();
+
+                Intent intentVaiProFormulario = new Intent(ListaPessoasActivity.this, FormularioActivity.class);
+                intentVaiProFormulario.putExtra("pessoa", pessoa);
+                startActivity(intentVaiProFormulario);
             }
 
         });
 
-        
+
         Button novaPessoa = (Button) findViewById(R.id.nova_pessoa);
         novaPessoa.setOnClickListener(new View.OnClickListener() {
             @Override
