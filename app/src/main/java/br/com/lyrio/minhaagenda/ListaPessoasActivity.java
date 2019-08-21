@@ -77,6 +77,16 @@ public class ListaPessoasActivity extends AppCompatActivity {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
         final Pessoa pessoa = (Pessoa) listaPessoas.getItemAtPosition(info.position);
 
+        MenuItem itemSMS = menu.add("Enviar SMS");
+        Intent intentSMS = new Intent(Intent.ACTION_VIEW);
+        intentSMS.setData(Uri.parse("sms:"+pessoa.getTelefone()));
+        itemSMS.setIntent(intentSMS);
+
+        MenuItem itemMapa= menu.add("Visualizar no Mapa");
+        Intent intentMapa = new Intent(Intent.ACTION_VIEW);
+        intentMapa.setData(Uri.parse("geo:0,0?q="+pessoa.getEndereco()));
+        itemMapa.setIntent(intentMapa);
+
         MenuItem itemSite = menu.add("Visitar site");
         Intent intentSite = new Intent(Intent.ACTION_VIEW);
 
