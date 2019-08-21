@@ -1,6 +1,8 @@
 package br.com.lyrio.minhaagenda;
 
 import android.content.Intent;
+import android.net.Uri;
+import android.provider.Browser;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -72,13 +74,25 @@ public class ListaPessoasActivity extends AppCompatActivity {
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, final ContextMenu.ContextMenuInfo menuInfo) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+        final Pessoa pessoa = (Pessoa) listaPessoas.getItemAtPosition(info.position);
+
+        MenuItem itemSite = menu.add("Visitar site");
+        Intent intentSite = new Intent(Intent.ACTION_VIEW);
+
+        String site = pessoa.getSite();
+        if(!site.startsWith("http://")){
+         site = "http://" + site;
+
+        }
+
+        intentSite.setData(Uri.parse(pessoa.getSite()));
+        itemSite.setIntent(intentSite);
+
         MenuItem deletar = menu.add("Deletar");
         deletar.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
-                AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-                Pessoa pessoa = (Pessoa) listaPessoas.getItemAtPosition(info.position);
-
                 PessoaDAO dao = new PessoaDAO(ListaPessoasActivity.this);
                 dao.deleta(pessoa);
                 dao.close();
