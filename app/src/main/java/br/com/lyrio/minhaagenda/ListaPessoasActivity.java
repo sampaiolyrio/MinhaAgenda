@@ -1,8 +1,11 @@
 package br.com.lyrio.minhaagenda;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.provider.Browser;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -76,6 +79,26 @@ public class ListaPessoasActivity extends AppCompatActivity {
     public void onCreateContextMenu(ContextMenu menu, View v, final ContextMenu.ContextMenuInfo menuInfo) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
         final Pessoa pessoa = (Pessoa) listaPessoas.getItemAtPosition(info.position);
+
+        MenuItem itemLigar = menu.add("Ligar");
+        itemLigar.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                if(ActivityCompat.checkSelfPermission(ListaPessoasActivity.this, Manifest.permission.CALL_PHONE)
+                        != PackageManager.PERMISSION_GRANTED){
+                    ActivityCompat.requestPermissions(ListaPessoasActivity.this,
+                            new String[]{Manifest.permission.CALL_PHONE}, 123);
+                } else {
+
+                    Intent intentLigar = new Intent(Intent.ACTION_CALL);
+                    intentLigar.setData(Uri.parse("tel:" + pessoa.getTelefone()));
+                    startActivity(intentLigar);
+                }
+
+                    return false;
+
+                }
+            });
 
         MenuItem itemSMS = menu.add("Enviar SMS");
         Intent intentSMS = new Intent(Intent.ACTION_VIEW);
