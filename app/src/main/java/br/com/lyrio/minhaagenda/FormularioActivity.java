@@ -6,8 +6,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,10 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import java.io.File;
-import java.io.Serializable;
-
 import br.com.lyrio.minhaagenda.dao.PessoaDAO;
 import br.com.lyrio.minhaagenda.modelo.Pessoa;
 
@@ -28,6 +25,7 @@ public class FormularioActivity extends AppCompatActivity {
     public static final int CODIGO_CAMERA = 567;
     private FormularioHelper helper;
     private String caminhoFoto;
+    private Uri fotoURI;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,24 +50,26 @@ public class FormularioActivity extends AppCompatActivity {
                 Intent intentCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 caminhoFoto = getExternalFilesDir(null) + "/" + System.currentTimeMillis() + ".jpg";
                 File arquivoFoto = new File(caminhoFoto);
-                intentCamera.putExtra(MediaStore.EXTRA_OUTPUT,Uri.fromFile(arquivoFoto));
+                fotoURI = FileProvider.getUriForFile(FormularioActivity.this, BuildConfig.APPLICATION_ID + ".provider", arquivoFoto);
+                intentCamera.putExtra(MediaStore.EXTRA_OUTPUT,fotoURI);
                 startActivityForResult(intentCamera, CODIGO_CAMERA);
             }
         });
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        if (requestCode == Activity.RESULT_OK) {
-            if (requestCode == CODIGO_CAMERA) {
-                ImageView foto = (ImageView) findViewById(R.id.formulario_foto);
-                Bitmap bitmap = BitmapFactory.decodeFile(caminhoFoto);
-                Bitmap bitmapReduzido = Bitmap.createScaledBitmap(bitmap, 300, 300, true);
-                foto.setImageBitmap(bitmapReduzido);
-                foto.setScaleType(ImageView.ScaleType.FIT_XY);
+            if(resultCode == Activity.RESULT_OK) {
+                if (requestCode == CODIGO_CAMERA) {
+                    ImageView foto = (ImageView) findViewById(R.id.formulario_foto);
+                    Bitmap bitmap = BitmapFactory.decodeFile(caminhoFoto);
+                    Bitmap bitmapReduzido = Bitmap.createScaledBitmap(bitmap, 400, 300, true);
+                    foto.setImageBitmap(bitmapReduzido);
+                    foto.setRotation(270);
 
+                }
             }
 
-        }
+
 
         // abrir a foto que foi tirada
     }
