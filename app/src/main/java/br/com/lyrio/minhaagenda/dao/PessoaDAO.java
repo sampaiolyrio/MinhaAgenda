@@ -98,4 +98,12 @@ public class PessoaDAO extends SQLiteOpenHelper {
         db.update("Pessoas", dados,"id = ?", params);
 
     }
+
+    public boolean ehPessoa(String telefone){
+       SQLiteDatabase db = getReadableDatabase();
+       Cursor c = db.rawQuery("SELECT * FROM pessoas WHERE telefone=?", new String[]{telefone});
+       int resultados = c.getCount();
+       c.close();
+       return resultados > 0;
+    }
 }
