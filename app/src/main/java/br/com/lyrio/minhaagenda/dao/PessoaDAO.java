@@ -14,7 +14,7 @@ import br.com.lyrio.minhaagenda.modelo.Pessoa;
 public class PessoaDAO extends SQLiteOpenHelper {
 
     public PessoaDAO(Context context) {
-        super(context, "minhaagenda", null, 1);
+        super(context, "minhaagenda", null, 2);
     }
 
     @Override
@@ -25,15 +25,20 @@ public class PessoaDAO extends SQLiteOpenHelper {
                 ", endereco TEXT" +
                 ", telefone TEXT" +
                 ", site TEXT" +
-                ", nota REAL );";
+                ", nota REAL"+
+                ", caminhoFoto TEXT);";
         db.execSQL(sql);
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int i, int i1) {
-        String sql = "DROP TABLE IF EXISTS pessoas;";
-        db.execSQL(sql);
-        onCreate(db);
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        String sql = "";
+        switch (oldVersion) {
+            case 1:
+                sql = "ALTER TABLE Pessoas ADD COLUMN caminhoFoto TEXT";
+                db.execSQL(sql); // indo para versao 2
+        }
+
     }
 
     public void insere(Pessoa pessoa) {
@@ -53,6 +58,7 @@ public class PessoaDAO extends SQLiteOpenHelper {
         dados.put("telefone", pessoa.getTelefone());
         dados.put("site", pessoa.getSite());
         dados.put("nota", pessoa.getNota());
+        dados.put("caminhoFoto", pessoa.getCaminhoFoto());
         return dados;
     }
 
@@ -69,7 +75,7 @@ public class PessoaDAO extends SQLiteOpenHelper {
             pessoa.setTelefone(c.getString(c.getColumnIndex("telefone")));
             pessoa.setSite(c.getString(c.getColumnIndex("site")));
             pessoa.setNota(c.getDouble(c.getColumnIndex("nota")));
-
+            pessoa.setCaminhoFoto((c.getString(c.getColumnIndex("caminhoFoto"))));
             pessoas.add(pessoa);
 
         }
