@@ -53,7 +53,7 @@ public class PessoasAdapter extends BaseAdapter {
         if (view == null) {
             view = inflater.inflate(R.layout.list_item, parent, false);
         }
-        
+
         TextView campoNome = (TextView) view.findViewById(R.id.item_nome);
         campoNome.setText(pessoa.getNome());
 
