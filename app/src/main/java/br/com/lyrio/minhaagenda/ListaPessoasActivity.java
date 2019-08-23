@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import br.com.lyrio.minhaagenda.adapter.PessoasAdapter;
 import br.com.lyrio.minhaagenda.dao.PessoaDAO;
 import br.com.lyrio.minhaagenda.modelo.Pessoa;
 
@@ -64,8 +65,7 @@ public class ListaPessoasActivity extends AppCompatActivity {
         List<Pessoa> pessoas = dao.buscaPessoas();
         dao.close();
 
-
-        ArrayAdapter<Pessoa> adapter = new ArrayAdapter<Pessoa>(this, android.R.layout.simple_list_item_1, pessoas);
+        PessoasAdapter adapter = new PessoasAdapter(this, pessoas);
         listaPessoas.setAdapter(adapter);
     }
 
