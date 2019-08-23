@@ -67,6 +67,7 @@ public class ListaPessoasActivity extends AppCompatActivity {
 
         PessoasAdapter adapter = new PessoasAdapter(this, pessoas);
         listaPessoas.setAdapter(adapter);
+
     }
 
     @Override
