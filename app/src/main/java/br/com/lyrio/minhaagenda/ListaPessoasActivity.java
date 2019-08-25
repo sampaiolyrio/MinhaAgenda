@@ -9,6 +9,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.ContextMenu;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import br.com.lyrio.minhaagenda.adapter.PessoasAdapter;
+import br.com.lyrio.minhaagenda.converter.PessoaConverter;
 import br.com.lyrio.minhaagenda.dao.PessoaDAO;
 import br.com.lyrio.minhaagenda.modelo.Pessoa;
 
@@ -74,6 +76,31 @@ public class ListaPessoasActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         carregaLista();
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_lista_pessoas, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_enviar_notas:
+               PessoaDAO dao = new PessoaDAO( this);
+               List<Pessoa> pessoas = dao.buscaPessoas();
+               dao.close();
+
+                PessoaConverter conversor = new PessoaConverter();
+                String json =  conversor.converteParaJSON(pessoas);
+
+                Toast.makeText(this, json, Toast.LENGTH_LONG).show();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
