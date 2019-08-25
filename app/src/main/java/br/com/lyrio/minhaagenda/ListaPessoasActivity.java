@@ -97,6 +97,10 @@ public class ListaPessoasActivity extends AppCompatActivity {
                 PessoaConverter conversor = new PessoaConverter();
                 String json =  conversor.converteParaJSON(pessoas);
 
+                WebClient client = new WebClient();
+                String resposta = client.post(json);
+
+
                 Toast.makeText(this, json, Toast.LENGTH_LONG).show();
                 break;
         }
