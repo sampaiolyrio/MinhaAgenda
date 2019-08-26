@@ -60,6 +60,16 @@ public class PessoasAdapter extends BaseAdapter {
         TextView campoTelefone = (TextView) view.findViewById(R.id.item_telefone);
         campoTelefone.setText(pessoa.getTelefone());
 
+        TextView campoEndereco = (TextView) view.findViewById(R.id.item_endereco);
+        if (campoEndereco !=null){
+        campoEndereco.setText(pessoa.getEndereco());
+        }
+
+        TextView campoSite = (TextView) view.findViewById(R.id.item_site);
+        if (campoSite != null) {
+            campoSite.setText(pessoa.getSite());
+        }
+
         ImageView campoFoto = (ImageView) view.findViewById(R.id.item_foto);
         String caminhoFoto = pessoa.getCaminhoFoto();
         if (caminhoFoto != null) {
