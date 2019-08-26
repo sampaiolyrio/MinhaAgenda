@@ -90,18 +90,7 @@ public class ListaPessoasActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_enviar_notas:
-               PessoaDAO dao = new PessoaDAO( this);
-               List<Pessoa> pessoas = dao.buscaPessoas();
-               dao.close();
-
-                PessoaConverter conversor = new PessoaConverter();
-                String json =  conversor.converteParaJSON(pessoas);
-
-                WebClient client = new WebClient();
-                String resposta = client.post(json);
-
-
-                Toast.makeText(this, json, Toast.LENGTH_LONG).show();
+                new EnviaPessoasTask(this).execute();
                 break;
         }
         return super.onOptionsItemSelected(item);
