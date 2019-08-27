@@ -1,6 +1,8 @@
 package br.com.lyrio.minhaagenda;
 
 import android.content.Intent;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -21,29 +23,12 @@ public class ProvasActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_provas);
 
-        List<String> topicosPort = Arrays.asList("sujeito", "objeto direto", "objeto indireto");
-        Prova provaPortugues = new Prova("Portugues", "25/08/2019", topicosPort);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction tx = fragmentManager.beginTransaction();
+        tx.replace(R.id.frame_principal, new ListaProvasFragment());
+        tx.commit();
 
-        List<String> topicosMat = Arrays.asList("Equações", "Trigonometria");
-        Prova provaMatematica = new Prova("Matemática", "26/08/2019", topicosMat);
 
-        List<Prova> provas = Arrays.asList(provaPortugues, provaMatematica);
 
-        ArrayAdapter<Prova> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, provas);
-
-        ListView lista = (ListView) findViewById(R.id.provas_lista);
-
-        lista.setAdapter(adapter);
-
-        lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
-                Prova prova = (Prova) parent.getItemAtPosition(position);
-                Toast.makeText(ProvasActivity.this, "Clicou na prova de " + prova, Toast.LENGTH_LONG).show();
-                Intent vaiParaDetalhes = new Intent(ProvasActivity.this, DetalhesProvaActivity.class);
-                vaiParaDetalhes.putExtra("prova", prova);
-                startActivity(vaiParaDetalhes);
-            }
-            });
     }
 }
