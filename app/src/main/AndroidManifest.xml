@@ -24,6 +24,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".DetalhesProvaActivity"/>
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -40,6 +41,7 @@
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
+
     </application>
 
 </manifest>
